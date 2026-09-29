@@ -1,0 +1,195 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 1. Global Default-Deny Catch-All
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && (
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid)) ||
+        request.auth.token.email == 'samramuhammadsiddique831@gmail.com'
+      );
+    }
+
+    // User Profile
+    function isValidUserProfile(data) {
+      return data.keys().hasAll(['userId', 'email']) &&
+        data.keys().hasOnly(['userId', 'email', 'displayName', 'createdAt']) &&
+        data.userId is string && data.userId.size() <= 128 &&
+        data.email is string && data.email.size() <= 256 &&
+        (!('displayName' in data) || (data.displayName is string && data.displayName.size() <= 128)) &&
+        (!('createdAt' in data) || (data.createdAt is string && data.createdAt.size() <= 64));
+    }
+
+    match /users/{userId} {
+      allow get: if isSignedIn() && (request.auth.uid == userId || isAdmin());
+      allow create: if isSignedIn() && request.auth.uid == userId && isValidUserProfile(incoming()) && incoming().userId == request.auth.uid;
+      allow update: if isSignedIn() && request.auth.uid == userId && isValidUserProfile(incoming()) && incoming().userId == existing().userId;
+      allow delete: if isSignedIn() && (request.auth.uid == userId || isAdmin());
+    }
+
+    // Admin List
+    match /admins/{adminUid} {
+      allow get: if isSignedIn() && (request.auth.uid == adminUid || isAdmin());
+      allow list: if isAdmin();
+      allow write: if false; // Only assigned via admin script or server
+    }
+
+    // Bookmarks
+    function isValidBookmark(data) {
+      return data.keys().hasAll(['userId', 'contentId', 'contentType', 'title']) &&
+        data.keys().hasOnly(['userId', 'contentId', 'contentType', 'title', 'reference', 'savedAt']) &&
+        data.userId is string && data.userId.size() <= 128 &&
+        data.contentId is string && data.contentId.size() <= 128 &&
+        data.contentType in ['ayah', 'hadith', 'dua', 'quote', 'reminder', 'article'] &&
+        data.title is string && data.title.size() <= 256 &&
+        (!('reference' in data) || (data.reference is string && data.reference.size() <= 256)) &&
+        (!('savedAt' in data) || (data.savedAt is string && data.savedAt.size() <= 64));
+    }
+
+    match /bookmarks/{bookmarkId} {
+      allow get: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow list: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow create: if isSignedIn() && isValidBookmark(incoming()) && incoming().userId == request.auth.uid;
+      allow update: if isSignedIn() && isValidBookmark(incoming()) && incoming().userId == existing().userId && existing().userId == request.auth.uid;
+      allow delete: if isSignedIn() && existing().userId == request.auth.uid;
+    }
+
+    // Reading History
+    function isValidReadingHistory(data) {
+      return data.keys().hasAll(['userId', 'contentId', 'contentType']) &&
+        data.keys().hasOnly(['userId', 'contentId', 'contentType', 'title', 'viewedAt']) &&
+        data.userId is string && data.userId.size() <= 128 &&
+        data.contentId is string && data.contentId.size() <= 128 &&
+        data.contentType is string && data.contentType.size() <= 64 &&
+        (!('title' in data) || (data.title is string && data.title.size() <= 256)) &&
+        (!('viewedAt' in data) || (data.viewedAt is string && data.viewedAt.size() <= 64));
+    }
+
+    match /readingHistory/{historyId} {
+      allow get: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow list: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow create: if isSignedIn() && isValidReadingHistory(incoming()) && incoming().userId == request.auth.uid;
+      allow update: if isSignedIn() && isValidReadingHistory(incoming()) && incoming().userId == existing().userId && existing().userId == request.auth.uid;
+      allow delete: if isSignedIn() && existing().userId == request.auth.uid;
+    }
+
+    // Qur'an Ayahs
+    function isValidAyah(data) {
+      return data.keys().hasAll(['surah', 'surahNumber', 'ayahNumber', 'arabic', 'englishTranslation', 'topic']) &&
+        data.surah is string && data.surah.size() <= 128 &&
+        data.surahNumber is number &&
+        data.ayahNumber is number &&
+        data.arabic is string && data.arabic.size() <= 4096 &&
+        data.englishTranslation is string && data.englishTranslation.size() <= 4096 &&
+        data.topic is string && data.topic.size() <= 128;
+    }
+
+    match /ayahs/{ayahId} {
+      allow get, list: if (resource.data.published == true) || isAdmin();
+      allow create: if isAdmin() && isValidAyah(incoming());
+      allow update: if isAdmin() && isValidAyah(incoming());
+      allow delete: if isAdmin();
+    }
+
+    // Hadith
+    function isValidHadith(data) {
+      return data.keys().hasAll(['english', 'collection', 'grading', 'topic']) &&
+        data.english is string && data.english.size() <= 4096 &&
+        data.collection is string && data.collection.size() <= 128 &&
+        data.grading is string && data.grading.size() <= 64 &&
+        data.topic is string && data.topic.size() <= 128;
+    }
+
+    match /hadith/{hadithId} {
+      allow get, list: if (resource.data.published == true) || isAdmin();
+      allow create: if isAdmin() && isValidHadith(incoming());
+      allow update: if isAdmin() && isValidHadith(incoming());
+      allow delete: if isAdmin();
+    }
+
+    // Duas
+    function isValidDua(data) {
+      return data.keys().hasAll(['title', 'arabic', 'english', 'source', 'topic']) &&
+        data.title is string && data.title.size() <= 256 &&
+        data.arabic is string && data.arabic.size() <= 4096 &&
+        data.english is string && data.english.size() <= 4096 &&
+        data.source is string && data.source.size() <= 256 &&
+        data.topic is string && data.topic.size() <= 128;
+    }
+
+    match /duas/{duaId} {
+      allow get, list: if (resource.data.published == true) || isAdmin();
+      allow create: if isAdmin() && isValidDua(incoming());
+      allow update: if isAdmin() && isValidDua(incoming());
+      allow delete: if isAdmin();
+    }
+
+    // Islamic Quotes
+    function isValidQuote(data) {
+      return data.keys().hasAll(['text', 'author', 'source', 'topic']) &&
+        data.text is string && data.text.size() <= 4096 &&
+        data.author is string && data.author.size() <= 128 &&
+        data.source is string && data.source.size() <= 256 &&
+        data.topic is string && data.topic.size() <= 128;
+    }
+
+    match /quotes/{quoteId} {
+      allow get, list: if (resource.data.published == true) || isAdmin();
+      allow create: if isAdmin() && isValidQuote(incoming());
+      allow update: if isAdmin() && isValidQuote(incoming());
+      allow delete: if isAdmin();
+    }
+
+    // Motivational Reminders
+    function isValidReminder(data) {
+      return data.keys().hasAll(['title', 'content', 'topic']) &&
+        data.title is string && data.title.size() <= 256 &&
+        data.content is string && data.content.size() <= 4096 &&
+        data.topic is string && data.topic.size() <= 128;
+    }
+
+    match /reminders/{reminderId} {
+      allow get, list: if (resource.data.published == true) || isAdmin();
+      allow create: if isAdmin() && isValidReminder(incoming());
+      allow update: if isAdmin() && isValidReminder(incoming());
+      allow delete: if isAdmin();
+    }
+
+    // Articles
+    function isValidArticle(data) {
+      return data.keys().hasAll(['title', 'slug', 'summary', 'content', 'category']) &&
+        data.title is string && data.title.size() <= 256 &&
+        data.slug is string && data.slug.size() <= 256 &&
+        data.summary is string && data.summary.size() <= 1024 &&
+        data.content is string && data.content.size() <= 32768 &&
+        data.category is string && data.category.size() <= 128;
+    }
+
+    match /articles/{articleId} {
+      allow get, list: if (resource.data.published == true) || isAdmin();
+      allow create: if isAdmin() && isValidArticle(incoming());
+      allow update: if isAdmin() && isValidArticle(incoming());
+      allow delete: if isAdmin();
+    }
+  }
+}

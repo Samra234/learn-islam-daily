@@ -1,0 +1,196 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile information",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "maxLength": 128 },
+        "email": { "type": "string", "maxLength": 256 },
+        "displayName": { "type": "string", "maxLength": 128 },
+        "createdAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["userId", "email"]
+    },
+    "Bookmark": {
+      "title": "Bookmark",
+      "description": "User saved bookmark",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "maxLength": 128 },
+        "contentId": { "type": "string", "maxLength": 128 },
+        "contentType": { "type": "string", "enum": ["ayah", "hadith", "dua", "quote", "reminder", "article"] },
+        "title": { "type": "string", "maxLength": 256 },
+        "reference": { "type": "string", "maxLength": 256 },
+        "savedAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["userId", "contentId", "contentType", "title"]
+    },
+    "ReadingHistory": {
+      "title": "ReadingHistory",
+      "description": "User reading history record",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "maxLength": 128 },
+        "contentId": { "type": "string", "maxLength": 128 },
+        "contentType": { "type": "string", "maxLength": 64 },
+        "title": { "type": "string", "maxLength": 256 },
+        "viewedAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["userId", "contentId", "contentType"]
+    },
+    "Ayah": {
+      "title": "Ayah",
+      "description": "Verified Qur'anic Ayah with translations",
+      "type": "object",
+      "properties": {
+        "surah": { "type": "string", "maxLength": 128 },
+        "surahNumber": { "type": "number" },
+        "ayahNumber": { "type": "number" },
+        "arabic": { "type": "string", "maxLength": 4096 },
+        "englishTranslation": { "type": "string", "maxLength": 4096 },
+        "urduTranslation": { "type": "string", "maxLength": 4096 },
+        "transliteration": { "type": "string", "maxLength": 4096 },
+        "topic": { "type": "string", "maxLength": 128 },
+        "reflection": { "type": "string", "maxLength": 4096 },
+        "source": { "type": "string", "maxLength": 256 },
+        "published": { "type": "boolean" },
+        "createdAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["surah", "surahNumber", "ayahNumber", "arabic", "englishTranslation", "topic"]
+    },
+    "Hadith": {
+      "title": "Hadith",
+      "description": "Authentic Hadith record with verification",
+      "type": "object",
+      "properties": {
+        "arabic": { "type": "string", "maxLength": 4096 },
+        "english": { "type": "string", "maxLength": 4096 },
+        "urdu": { "type": "string", "maxLength": 4096 },
+        "collection": { "type": "string", "maxLength": 128 },
+        "hadithNumber": { "type": "string", "maxLength": 64 },
+        "grading": { "type": "string", "maxLength": 64 },
+        "topic": { "type": "string", "maxLength": 128 },
+        "source": { "type": "string", "maxLength": 256 },
+        "published": { "type": "boolean" },
+        "createdAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["english", "collection", "grading", "topic"]
+    },
+    "Dua": {
+      "title": "Dua",
+      "description": "Supplication from Qur'an or authentic Sunnah",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "maxLength": 256 },
+        "arabic": { "type": "string", "maxLength": 4096 },
+        "transliteration": { "type": "string", "maxLength": 4096 },
+        "english": { "type": "string", "maxLength": 4096 },
+        "urdu": { "type": "string", "maxLength": 4096 },
+        "source": { "type": "string", "maxLength": 256 },
+        "topic": { "type": "string", "maxLength": 128 },
+        "published": { "type": "boolean" },
+        "createdAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["title", "arabic", "english", "source", "topic"]
+    },
+    "IslamicQuote": {
+      "title": "IslamicQuote",
+      "description": "Verified quote from Sahabah or scholars",
+      "type": "object",
+      "properties": {
+        "text": { "type": "string", "maxLength": 4096 },
+        "author": { "type": "string", "maxLength": 128 },
+        "source": { "type": "string", "maxLength": 256 },
+        "topic": { "type": "string", "maxLength": 128 },
+        "published": { "type": "boolean" },
+        "createdAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["text", "author", "source", "topic"]
+    },
+    "Reminder": {
+      "title": "Reminder",
+      "description": "Motivational Islamic reminder",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "maxLength": 256 },
+        "content": { "type": "string", "maxLength": 4096 },
+        "relatedAyah": { "type": "string", "maxLength": 256 },
+        "reference": { "type": "string", "maxLength": 256 },
+        "topic": { "type": "string", "maxLength": 128 },
+        "published": { "type": "boolean" },
+        "createdAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["title", "content", "topic"]
+    },
+    "Article": {
+      "title": "Article",
+      "description": "Educational Islamic article with references",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "maxLength": 256 },
+        "slug": { "type": "string", "maxLength": 256 },
+        "summary": { "type": "string", "maxLength": 1024 },
+        "content": { "type": "string", "maxLength": 32768 },
+        "category": { "type": "string", "maxLength": 128 },
+        "references": { "type": "string", "maxLength": 2048 },
+        "readTime": { "type": "string", "maxLength": 64 },
+        "published": { "type": "boolean" },
+        "createdAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["title", "slug", "summary", "content", "category"]
+    },
+    "AdminUser": {
+      "title": "AdminUser",
+      "description": "Designated administrator UID",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "maxLength": 256 },
+        "assignedAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["email"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Private user profile and metadata"
+    },
+    "/bookmarks/{bookmarkId}": {
+      "schema": "Bookmark",
+      "description": "User bookmarked spiritual items"
+    },
+    "/readingHistory/{historyId}": {
+      "schema": "ReadingHistory",
+      "description": "Individual reading history"
+    },
+    "/ayahs/{ayahId}": {
+      "schema": "Ayah",
+      "description": "Qur'an ayahs repository"
+    },
+    "/hadith/{hadithId}": {
+      "schema": "Hadith",
+      "description": "Authentic Hadith collection"
+    },
+    "/duas/{duaId}": {
+      "schema": "Dua",
+      "description": "Islamic Duas repository"
+    },
+    "/quotes/{quoteId}": {
+      "schema": "IslamicQuote",
+      "description": "Verified Islamic quotes repository"
+    },
+    "/reminders/{reminderId}": {
+      "schema": "Reminder",
+      "description": "Motivational Islamic reminders"
+    },
+    "/articles/{articleId}": {
+      "schema": "Article",
+      "description": "Educational blog articles"
+    },
+    "/admins/{userId}": {
+      "schema": "AdminUser",
+      "description": "Admin privileges mapping"
+    }
+  }
+}

@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+@layer utilities {
+  .font-arabic {
+    font-family: 'Amiri', 'Noto Naskh Arabic', serif;
+  }
+  .font-urdu {
+    font-family: 'Noto Nastaliq Urdu', 'Noto Naskh Arabic', serif;
+  }
+  .font-cinzel {
+    font-family: 'Cinzel', serif;
+  }
+  .font-sans-clean {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  }
+}
+
+/* Subtle peaceful Islamic geometric background pattern */
+.bg-islamic-pattern {
+  background-color: #faf8f5;
+  background-image: radial-gradient(rgba(16, 185, 129, 0.05) 1px, transparent 1px), radial-gradient(rgba(217, 119, 6, 0.04) 1px, #faf8f5 1px);
+  background-size: 24px 24px;
+  background-position: 0 0, 12px 12px;
+}
+
+.bg-islamic-emerald {
+  background-color: #064e3b;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Custom scrollbar for peaceful reading */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1ede4;
+}
+::-webkit-scrollbar-thumb {
+  background: #047857;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #065f46;
+}

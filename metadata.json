@@ -1,0 +1,6 @@
+{
+  "name": "Learn Islam Daily",
+  "description": "A Daily Reminder for the Heart. Explore verified Qur'an ayahs by topic, authentic Hadith, Duas, Islamic quotes, motivational reminders, and educational articles.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
