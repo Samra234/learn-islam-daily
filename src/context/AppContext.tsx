@@ -1,13 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { User, auth, signInWithPopup, googleProvider, signOut, onAuthStateChanged, isUserAdmin, db, handleFirestoreError, OperationType, testConnection } from '../lib/firebase';
+import { db, testConnection } from '../lib/firebase';
 import {
   collection,
-  query,
-  where,
   onSnapshot,
-  setDoc,
-  deleteDoc,
-  doc,
   addDoc
 } from 'firebase/firestore';
 import {
@@ -27,7 +22,7 @@ import {
 
 export interface BookmarkRecord {
   id: string;
-  userId: string;
+  userId?: string;
   contentId: string;
   contentType: 'ayah' | 'hadith' | 'dua' | 'quote' | 'reminder' | 'article';
   title: string;
@@ -44,13 +39,15 @@ export interface HistoryRecord {
 }
 
 interface AppContextType {
-  user: User | null;
-  isAdmin: boolean;
-  authLoading: boolean;
+  // Backward compatibility stubs
+  user?: null;
+  isAdmin?: boolean;
+  authLoading?: boolean;
+  loginWithGoogle?: () => Promise<void>;
+  logout?: () => Promise<void>;
+
   language: 'en' | 'ur';
   setLanguage: (lang: 'en' | 'ur') => void;
-  loginWithGoogle: () => Promise<void>;
-  logout: () => Promise<void>;
   
   // Data
   ayahs: AyahItem[];
@@ -60,7 +57,7 @@ interface AppContextType {
   reminders: ReminderItem[];
   articles: ArticleItem[];
   
-  // Bookmarks
+  // Bookmarks (saved locally on device)
   bookmarks: BookmarkRecord[];
   isBookmarked: (contentId: string) => boolean;
   toggleBookmark: (item: {
@@ -68,13 +65,13 @@ interface AppContextType {
     contentType: 'ayah' | 'hadith' | 'dua' | 'quote' | 'reminder' | 'article';
     title: string;
     reference: string;
-  }) => Promise<void>;
+  }) => void;
   
   // Reading History
   readingHistory: HistoryRecord[];
   addToHistory: (contentId: string, contentType: string, title: string) => void;
 
-  // Admin Actions
+  // Publishing Actions
   addAyah: (ayah: Omit<AyahItem, 'id'>) => Promise<void>;
   addHadith: (hadith: Omit<HadithItem, 'id'>) => Promise<void>;
   addDua: (dua: Omit<DuaItem, 'id'>) => Promise<void>;
@@ -86,8 +83,6 @@ interface AppContextType {
 const AppContext = createContext<AppContextType | null>(null);
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [authLoading, setAuthLoading] = useState(true);
   const [language, setLanguageState] = useState<'en' | 'ur'>('en');
 
   const [ayahs, setAyahs] = useState<AyahItem[]>(INITIAL_AYAHS);
@@ -143,102 +138,39 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }
   }, []);
 
-  // Listen to Auth State
+  // Sync Ayahs from Firestore if available
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      setUser(currentUser);
-      setAuthLoading(false);
-
-      if (currentUser) {
-        // Sync or update user document in Firestore
-        try {
-          const userDocRef = doc(db, 'users', currentUser.uid);
-          await setDoc(userDocRef, {
-            userId: currentUser.uid,
-            email: currentUser.email || '',
-            displayName: currentUser.displayName || 'Muslim Servant',
-            createdAt: new Date().toISOString()
-          }, { merge: true });
-        } catch (error) {
-          console.warn('Could not record user doc:', error);
+    try {
+      const ayahsCol = collection(db, 'ayahs');
+      const unsubscribe = onSnapshot(ayahsCol, (snapshot) => {
+        if (!snapshot.empty) {
+          const fetched: AyahItem[] = [];
+          snapshot.forEach((doc) => {
+            fetched.push({ id: doc.id, ...(doc.data() as Omit<AyahItem, 'id'>) });
+          });
+          // Merge with initial data
+          setAyahs(prev => {
+            const map = new Map<string, AyahItem>();
+            INITIAL_AYAHS.forEach(item => map.set(item.id, item));
+            fetched.forEach(item => map.set(item.id, item));
+            return Array.from(map.values());
+          });
         }
-      }
-    });
-    return () => unsubscribe();
-  }, []);
-
-  // Sync Bookmarks with Firestore when logged in
-  useEffect(() => {
-    if (!user) {
-      return;
-    }
-
-    const bookmarksQuery = query(collection(db, 'bookmarks'), where('userId', '==', user.uid));
-    const unsubscribe = onSnapshot(bookmarksQuery, (snapshot) => {
-      const fetched: BookmarkRecord[] = [];
-      snapshot.forEach((doc) => {
-        fetched.push({ id: doc.id, ...(doc.data() as Omit<BookmarkRecord, 'id'>) });
+      }, (err) => {
+        console.warn('Ayahs fetch notice:', err.message);
       });
-      setBookmarks(fetched);
-      try {
-        localStorage.setItem('lid_local_bookmarks', JSON.stringify(fetched));
-      } catch (e) {
-        console.warn(e);
-      }
-    }, (error) => {
-      handleFirestoreError(error, OperationType.LIST, 'bookmarks');
-    });
 
-    return () => unsubscribe();
-  }, [user]);
-
-  // Sync Ayahs from Firestore
-  useEffect(() => {
-    const ayahsCol = collection(db, 'ayahs');
-    const unsubscribe = onSnapshot(ayahsCol, (snapshot) => {
-      if (!snapshot.empty) {
-        const fetched: AyahItem[] = [];
-        snapshot.forEach((doc) => {
-          fetched.push({ id: doc.id, ...(doc.data() as Omit<AyahItem, 'id'>) });
-        });
-        // Merge with initial data
-        setAyahs(prev => {
-          const map = new Map<string, AyahItem>();
-          INITIAL_AYAHS.forEach(item => map.set(item.id, item));
-          fetched.forEach(item => map.set(item.id, item));
-          return Array.from(map.values());
-        });
-      }
-    }, (err) => {
-      console.warn('Ayahs fetch notice:', err.message);
-    });
-
-    return () => unsubscribe();
+      return () => unsubscribe();
+    } catch (e) {
+      console.warn('Firestore sync optional:', e);
+    }
   }, []);
-
-  const loginWithGoogle = async () => {
-    try {
-      await signInWithPopup(auth, googleProvider);
-    } catch (error) {
-      console.error('Login error:', error);
-      throw error;
-    }
-  };
-
-  const logout = async () => {
-    try {
-      await signOut(auth);
-    } catch (error) {
-      console.error('Logout error:', error);
-      throw error;
-    }
-  };
 
   const isBookmarked = (contentId: string) => {
     return bookmarks.some(b => b.contentId === contentId);
   };
 
-  const toggleBookmark = async (item: {
+  const toggleBookmark = (item: {
     contentId: string;
     contentType: 'ayah' | 'hadith' | 'dua' | 'quote' | 'reminder' | 'article';
     title: string;
@@ -255,19 +187,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       } catch (e) {
         console.warn(e);
       }
-
-      if (user) {
-        try {
-          await deleteDoc(doc(db, 'bookmarks', existing.id));
-        } catch (error) {
-          handleFirestoreError(error, OperationType.DELETE, `bookmarks/${existing.id}`);
-        }
-      }
     } else {
       // Add
       const newRecord: BookmarkRecord = {
         id: `bm-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
-        userId: user ? user.uid : 'guest-user',
         contentId: item.contentId,
         contentType: item.contentType,
         title: item.title,
@@ -281,21 +204,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         localStorage.setItem('lid_local_bookmarks', JSON.stringify(updated));
       } catch (e) {
         console.warn(e);
-      }
-
-      if (user) {
-        try {
-          await setDoc(doc(db, 'bookmarks', newRecord.id), {
-            userId: user.uid,
-            contentId: newRecord.contentId,
-            contentType: newRecord.contentType,
-            title: newRecord.title,
-            reference: newRecord.reference,
-            savedAt: newRecord.savedAt
-          });
-        } catch (error) {
-          handleFirestoreError(error, OperationType.CREATE, `bookmarks/${newRecord.id}`);
-        }
       }
     }
   };
@@ -321,71 +229,101 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     });
   };
 
-  // Admin creation functions
+  // Creation functions with offline fallback
   const addAyah = async (item: Omit<AyahItem, 'id'>) => {
-    const docRef = await addDoc(collection(db, 'ayahs'), {
-      ...item,
-      published: true,
-      createdAt: new Date().toISOString()
-    });
-    setAyahs(prev => [{ id: docRef.id, ...item }, ...prev]);
+    const localId = `ayah-${Date.now()}`;
+    try {
+      const docRef = await addDoc(collection(db, 'ayahs'), {
+        ...item,
+        published: true,
+        createdAt: new Date().toISOString()
+      });
+      setAyahs(prev => [{ id: docRef.id, ...item }, ...prev]);
+    } catch {
+      setAyahs(prev => [{ id: localId, ...item }, ...prev]);
+    }
   };
 
   const addHadith = async (item: Omit<HadithItem, 'id'>) => {
-    const docRef = await addDoc(collection(db, 'hadith'), {
-      ...item,
-      published: true,
-      createdAt: new Date().toISOString()
-    });
-    setHadiths(prev => [{ id: docRef.id, ...item }, ...prev]);
+    const localId = `hadith-${Date.now()}`;
+    try {
+      const docRef = await addDoc(collection(db, 'hadith'), {
+        ...item,
+        published: true,
+        createdAt: new Date().toISOString()
+      });
+      setHadiths(prev => [{ id: docRef.id, ...item }, ...prev]);
+    } catch {
+      setHadiths(prev => [{ id: localId, ...item }, ...prev]);
+    }
   };
 
   const addDua = async (item: Omit<DuaItem, 'id'>) => {
-    const docRef = await addDoc(collection(db, 'duas'), {
-      ...item,
-      published: true,
-      createdAt: new Date().toISOString()
-    });
-    setDuas(prev => [{ id: docRef.id, ...item }, ...prev]);
+    const localId = `dua-${Date.now()}`;
+    try {
+      const docRef = await addDoc(collection(db, 'duas'), {
+        ...item,
+        published: true,
+        createdAt: new Date().toISOString()
+      });
+      setDuas(prev => [{ id: docRef.id, ...item }, ...prev]);
+    } catch {
+      setDuas(prev => [{ id: localId, ...item }, ...prev]);
+    }
   };
 
   const addQuote = async (item: Omit<QuoteItem, 'id'>) => {
-    const docRef = await addDoc(collection(db, 'quotes'), {
-      ...item,
-      published: true,
-      createdAt: new Date().toISOString()
-    });
-    setQuotes(prev => [{ id: docRef.id, ...item }, ...prev]);
+    const localId = `quote-${Date.now()}`;
+    try {
+      const docRef = await addDoc(collection(db, 'quotes'), {
+        ...item,
+        published: true,
+        createdAt: new Date().toISOString()
+      });
+      setQuotes(prev => [{ id: docRef.id, ...item }, ...prev]);
+    } catch {
+      setQuotes(prev => [{ id: localId, ...item }, ...prev]);
+    }
   };
 
   const addReminder = async (item: Omit<ReminderItem, 'id'>) => {
-    const docRef = await addDoc(collection(db, 'reminders'), {
-      ...item,
-      published: true,
-      createdAt: new Date().toISOString()
-    });
-    setReminders(prev => [{ id: docRef.id, ...item }, ...prev]);
+    const localId = `rem-${Date.now()}`;
+    try {
+      const docRef = await addDoc(collection(db, 'reminders'), {
+        ...item,
+        published: true,
+        createdAt: new Date().toISOString()
+      });
+      setReminders(prev => [{ id: docRef.id, ...item }, ...prev]);
+    } catch {
+      setReminders(prev => [{ id: localId, ...item }, ...prev]);
+    }
   };
 
   const addArticle = async (item: Omit<ArticleItem, 'id'>) => {
-    const docRef = await addDoc(collection(db, 'articles'), {
-      ...item,
-      published: true,
-      createdAt: new Date().toISOString()
-    });
-    setArticles(prev => [{ id: docRef.id, ...item }, ...prev]);
+    const localId = `art-${Date.now()}`;
+    try {
+      const docRef = await addDoc(collection(db, 'articles'), {
+        ...item,
+        published: true,
+        createdAt: new Date().toISOString()
+      });
+      setArticles(prev => [{ id: docRef.id, ...item }, ...prev]);
+    } catch {
+      setArticles(prev => [{ id: localId, ...item }, ...prev]);
+    }
   };
 
   return (
     <AppContext.Provider
       value={{
-        user,
-        isAdmin: isUserAdmin(user),
-        authLoading,
+        user: null,
+        isAdmin: true,
+        authLoading: false,
+        loginWithGoogle: async () => {},
+        logout: async () => {},
         language,
         setLanguage,
-        loginWithGoogle,
-        logout,
         ayahs,
         hadiths,
         duas,

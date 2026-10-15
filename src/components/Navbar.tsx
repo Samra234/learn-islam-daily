@@ -6,11 +6,7 @@ import {
   Bookmark,
   Search,
   Sparkles,
-  User as UserIcon,
-  LogOut,
-  Shield,
   Moon,
-  ChevronDown
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
@@ -22,8 +18,7 @@ interface NavbarProps {
 
 export const Navbar: React.FC<NavbarProps> = ({ currentRoute, onNavigate, onOpenSearch }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [userDropdownOpen, setUserDropdownOpen] = useState(false);
-  const { user, isAdmin, loginWithGoogle, logout, bookmarks, language, setLanguage } = useApp();
+  const { bookmarks, language, setLanguage } = useApp();
 
   const navLinks = [
     { label: language === 'ur' ? 'صفحۂ اول' : 'Home', route: 'home' },
@@ -41,7 +36,6 @@ export const Navbar: React.FC<NavbarProps> = ({ currentRoute, onNavigate, onOpen
   const handleNav = (route: string) => {
     onNavigate(route);
     setMobileMenuOpen(false);
-    setUserDropdownOpen(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -156,71 +150,6 @@ export const Navbar: React.FC<NavbarProps> = ({ currentRoute, onNavigate, onOpen
               <span>{language === 'ur' ? 'آج کی نصیحت' : "Today's Reminder"}</span>
             </button>
 
-            {/* User Account / Admin Menu */}
-            <div className="relative">
-              {user ? (
-                <button
-                  onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                  className="flex items-center space-x-1.5 p-1.5 rounded-lg hover:bg-stone-100 transition border border-stone-200"
-                >
-                  {user.photoURL ? (
-                    <img src={user.photoURL} alt="" className="w-7 h-7 rounded-full object-cover" />
-                  ) : (
-                    <div className="w-7 h-7 rounded-full bg-emerald-700 text-white flex items-center justify-center text-xs font-bold">
-                      {user.displayName?.charAt(0) || 'U'}
-                    </div>
-                  )}
-                  <ChevronDown className="w-3.5 h-3.5 text-stone-500" />
-                </button>
-              ) : (
-                <button
-                  onClick={() => loginWithGoogle()}
-                  className="text-xs font-semibold text-stone-700 hover:text-emerald-800 px-3 py-1.5 rounded-lg border border-stone-300 hover:border-emerald-600 transition"
-                >
-                  {language === 'ur' ? 'لاگ ان' : 'Sign In'}
-                </button>
-              )}
-
-              {/* User Dropdown */}
-              {userDropdownOpen && user && (
-                <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-stone-200 py-2 z-50 animate-in fade-in">
-                  <div className="px-4 py-2 border-b border-stone-100">
-                    <p className="text-xs font-semibold text-stone-800 truncate">{user.displayName || 'Learner'}</p>
-                    <p className="text-[11px] text-stone-500 truncate">{user.email}</p>
-                  </div>
-
-                  <button
-                    onClick={() => handleNav('saved')}
-                    className="w-full text-left px-4 py-2 text-xs text-stone-700 hover:bg-emerald-50 hover:text-emerald-800 flex items-center space-x-2"
-                  >
-                    <Bookmark className="w-4 h-4 text-emerald-600" />
-                    <span>My Islamic Learning ({bookmarks.length})</span>
-                  </button>
-
-                  {isAdmin && (
-                    <button
-                      onClick={() => handleNav('admin')}
-                      className="w-full text-left px-4 py-2 text-xs text-amber-700 bg-amber-50/50 hover:bg-amber-100 font-semibold flex items-center space-x-2"
-                    >
-                      <Shield className="w-4 h-4 text-amber-600" />
-                      <span>Admin Dashboard</span>
-                    </button>
-                  )}
-
-                  <button
-                    onClick={() => {
-                      logout();
-                      setUserDropdownOpen(false);
-                    }}
-                    className="w-full text-left px-4 py-2 text-xs text-red-600 hover:bg-red-50 flex items-center space-x-2 border-t border-stone-100 mt-1"
-                  >
-                    <LogOut className="w-4 h-4 text-red-500" />
-                    <span>Sign Out</span>
-                  </button>
-                </div>
-              )}
-            </div>
-
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -266,11 +195,6 @@ export const Navbar: React.FC<NavbarProps> = ({ currentRoute, onNavigate, onOpen
               <Bookmark className="w-4 h-4" />
               <span>Saved Items ({bookmarks.length})</span>
             </button>
-            {isAdmin && (
-              <button onClick={() => handleNav('admin')} className="text-amber-700 font-medium">
-                Admin Panel
-              </button>
-            )}
           </div>
         </div>
       )}

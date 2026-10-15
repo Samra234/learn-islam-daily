@@ -3,7 +3,7 @@ import { Shield, PlusCircle, CheckCircle2, AlertCircle, BookOpen, Layers } from 
 import { useApp } from '../context/AppContext';
 
 export const AdminPage: React.FC = () => {
-  const { user, isAdmin, addAyah, addHadith, addDua, addQuote, addReminder, addArticle, ayahs, hadiths, duas, quotes, reminders, articles } = useApp();
+  const { addAyah, addHadith, addDua, addQuote, addReminder, addArticle, ayahs, hadiths, duas, quotes, reminders, articles } = useApp();
   const [activeTab, setActiveTab] = useState<'ayah' | 'hadith' | 'dua' | 'quote' | 'reminder' | 'article'>('ayah');
   const [statusMessage, setStatusMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
@@ -71,18 +71,6 @@ export const AdminPage: React.FC = () => {
     content: '',
     references: ''
   });
-
-  if (!user || !isAdmin) {
-    return (
-      <div className="max-w-2xl mx-auto px-4 py-20 text-center space-y-4">
-        <Shield className="w-12 h-12 text-stone-400 mx-auto" />
-        <h1 className="font-cinzel text-2xl font-bold text-stone-900">Administrator Access Required</h1>
-        <p className="text-stone-600 text-sm">
-          You must be logged in as the designated administrator (samramuhammadsiddique831@gmail.com) to access the educational content management portal.
-        </p>
-      </div>
-    );
-  }
 
   const handleAyahSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -263,11 +251,11 @@ export const AdminPage: React.FC = () => {
         <div>
           <div className="flex items-center space-x-2 text-amber-400 text-xs font-bold uppercase tracking-wider mb-1">
             <Shield className="w-4 h-4" />
-            <span>Authenticated Administrator Console</span>
+            <span>Islamic Learning Management Console</span>
           </div>
           <h1 className="font-cinzel text-2xl font-bold">Content Publishing & Verification</h1>
           <p className="text-amber-200/80 text-xs mt-1">
-            Logged in as: <span className="font-medium text-white">{user.email}</span>
+            Publish verified teachings, Quranic reflections, and authentic supplications
           </p>
         </div>
 

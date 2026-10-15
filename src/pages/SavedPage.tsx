@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Bookmark, Trash2, Clock, BookOpen, Sparkles, User as UserIcon, LogIn, ChevronRight } from 'lucide-react';
+import { Bookmark, Trash2, Clock, BookOpen, Sparkles, ChevronRight } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
 interface SavedPageProps {
@@ -9,7 +9,7 @@ interface SavedPageProps {
 }
 
 export const SavedPage: React.FC<SavedPageProps> = ({ onNavigate, onOpenAyah, onOpenArticle }) => {
-  const { user, loginWithGoogle, bookmarks, toggleBookmark, readingHistory, ayahs, articles } = useApp();
+  const { bookmarks, toggleBookmark, readingHistory, ayahs, articles } = useApp();
   const [selectedFilter, setSelectedFilter] = useState<string>('all');
 
   const filteredBookmarks = bookmarks.filter(b => {
@@ -57,31 +57,20 @@ export const SavedPage: React.FC<SavedPageProps> = ({ onNavigate, onOpenAyah, on
           </p>
         </div>
 
-        {/* User Account Status */}
-        <div className="bg-stone-50 rounded-2xl p-4 border border-stone-200 w-full sm:w-auto text-center sm:text-right shrink-0">
-          {user ? (
-            <div className="space-y-1">
-              <div className="flex items-center justify-center sm:justify-end space-x-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="text-xs font-bold text-stone-800">{user.displayName || 'Muslim Servant'}</span>
-              </div>
-              <p className="text-[11px] text-stone-500">{user.email}</p>
-              <span className="text-[10px] text-emerald-700 bg-emerald-100/70 px-2 py-0.5 rounded font-semibold inline-block">
-                Cloud Sync Active
+        {/* Saved Status Indicator */}
+        <div className="bg-emerald-50/80 rounded-2xl p-4 border border-emerald-200 w-full sm:w-auto text-center sm:text-right shrink-0">
+          <div className="space-y-1">
+            <div className="flex items-center justify-center sm:justify-end space-x-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
+              <span className="text-xs font-bold text-emerald-950">
+                {bookmarks.length} {bookmarks.length === 1 ? 'Item' : 'Items'} Saved
               </span>
             </div>
-          ) : (
-            <div className="space-y-2">
-              <p className="text-xs text-stone-600">Sync across all your devices:</p>
-              <button
-                onClick={() => loginWithGoogle()}
-                className="px-4 py-2 rounded-xl bg-emerald-800 hover:bg-emerald-700 text-white font-semibold text-xs transition active:scale-95 flex items-center justify-center space-x-1.5 mx-auto sm:ml-auto"
-              >
-                <LogIn className="w-3.5 h-3.5" />
-                <span>Sign In with Google</span>
-              </button>
-            </div>
-          )}
+            <p className="text-[11px] text-emerald-800">Available instantly on this device</p>
+            <span className="text-[10px] text-emerald-800 bg-white/80 px-2 py-0.5 rounded font-medium border border-emerald-200 inline-block">
+              Private & Offline Ready
+            </span>
+          </div>
         </div>
       </div>
 
