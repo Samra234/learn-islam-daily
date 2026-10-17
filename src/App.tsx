@@ -22,20 +22,29 @@ function MainApp() {
   const [currentRoute, setCurrentRoute] = useState<string>('home');
   const [searchModalOpen, setSearchModalOpen] = useState(false);
 
-  // Sync hash routing
+  // Sync hash routing and clean pathname routing
   useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash.replace('#/', '').replace('#', '');
+    const handleLocationChange = () => {
+      const hash = window.location.hash.replace('#/', '').replace('#', '').trim();
       if (hash) {
         setCurrentRoute(hash);
-      } else {
-        setCurrentRoute('home');
+        return;
       }
+      const path = window.location.pathname.replace(/^\/+|\/+$/g, '').trim();
+      if (path && path !== 'index.html') {
+        setCurrentRoute(path);
+        return;
+      }
+      setCurrentRoute('home');
     };
 
-    handleHashChange();
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    handleLocationChange();
+    window.addEventListener('hashchange', handleLocationChange);
+    window.addEventListener('popstate', handleLocationChange);
+    return () => {
+      window.removeEventListener('hashchange', handleLocationChange);
+      window.removeEventListener('popstate', handleLocationChange);
+    };
   }, []);
 
   const navigate = (route: string) => {
