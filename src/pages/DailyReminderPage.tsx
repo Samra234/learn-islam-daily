@@ -69,7 +69,7 @@ ${reminder.title}:
 ${reminder.content}
 Related Ayah: "${reminder.relatedAyah}" (${reminder.reference})
 
-Via Learn Islam Daily • https://learnislamdaily.org`;
+Via Learn Islam Daily • https://learnislamdaily.netlify.app`;
 
     try {
       await navigator.clipboard.writeText(fullText);

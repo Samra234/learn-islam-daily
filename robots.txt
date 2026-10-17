@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://learnislamdaily.netlify.app/sitemap.xml
