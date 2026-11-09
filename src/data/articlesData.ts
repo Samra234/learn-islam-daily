@@ -612,6 +612,186 @@ When you read a verse of mercy, pause and ask Allah for His grace. When you read
     relatedVerses: ['Surah Muhammad 47:24', 'Surah Sad 38:29', 'Surah An-Nisa 4:82'],
     published: true,
     featured: true
+  },
+  {
+    id: 'art-fajr-dawn-barakah',
+    title: 'The Barakah of Dawn: Why Protecting Your Fajr Transforms the Entire Day',
+    titleUrdu: 'برکتِ فجر: صبح کی نماز کس طرح پورے دن کو روشن کرتی ہے',
+    slug: 'the-barakah-of-dawn-protecting-fajr-prayer',
+    excerpt: 'An inspiring exploration of why dawn prayer holds the spiritual compass for productivity, mental calm, and divine protection throughout the believer\'s day.',
+    excerptUrdu: 'فجر کی نماز کس طرح مومن کے دن میں ذہنی سکون، برکت اور الٰہی حفاظت کی ضمانت بنتی ہے۔',
+    category: 'Salah & Worship',
+    readTime: '7 min read',
+    publishedAt: '2026-10-01',
+    author: 'Learn Islam Daily Editorial',
+    content: `
+### The Hour of Awakening
+In the quiet stillness that precedes sunrise, the cosmos breathes in serene obedience. The Prophet Muhammad ﷺ made a specific, momentous supplication for his community: **"O Allah, bless my nation in their early mornings!"** (Sunan Abi Dawud 2606).
+
+While modern productivity literature frequently emphasizes "5 AM morning routines", the believer recognizes that true early morning triumph does not begin with cold showers or email triage; it begins by placing the forehead on the carpet in submission to the Creator of the universe.
+
+### Three Divine Safeguards in Fajr
+1. **The Shield of Divine Protection:** The Prophet ﷺ explicitly stated: *"Whoever prays the dawn prayer is under the protection of Allah"* (Sahih Muslim 657). Walking out into traffic, workplace stress, and unforeseen hardships while wrapped in Divine guarantee fundamentally reshapes inner tranquility.
+2. **The Witness of the Angels:** In Surah Al-Isra, Allah specifically highlights: *"Indeed, the recitation of dawn is ever witnessed"* (17:78). The angels of the night and the angels of the day gather in sacred convergence at the moment of Fajr.
+3. **Dismantling Spiritual Sluggishness:** When a human falls asleep, Satan ties three knots upon the back of the head. When you remember Allah upon waking, the first knot unties. When you make wudu, the second unties. When you pray, the third unties, leaving you energetic, refreshed, and pure in soul.
+
+### Practical Steps to Guard Your Fajr
+- **Treat the night before as part of your prayer:** Guarding Fajr begins at Isha. Minimize blue light and late screen consumption.
+- **Sleep in a state of Wudu and Dhikr:** Recite Ayat al-Kursi and the closing chapters before sleeping.
+- **Immediate Physical Action:** The very second the Adhan sounds, avoid debating your fatigue in bed. Swing your legs onto the floor immediately.
+    `,
+    keyTakeaways: [
+      'Fajr grants you the direct covenant of divine protection for the rest of your 24 hours.',
+      'Early hours carry the specific Barakah requested by the Messenger of Allah ﷺ.',
+      'Conquering the bed at dawn installs spiritual sovereignty over the lower desires (nafs) all day long.'
+    ],
+    relatedVerses: ['Surah Al-Isra 17:78', 'Surah Al-Fajr 89:1-2', 'Surah Qaf 50:39-40'],
+    published: true,
+    featured: true
+  },
+  {
+    id: 'art-purifying-inner-vessel',
+    title: 'Purifying the Inner Vessel: Overcoming Envy (Hasad), Pride (Kibr), and Ostentation (Riya)',
+    titleUrdu: 'باطنی برائیوں کی صفائی: حسد، تکبر اور ریاکاری کا علاج',
+    slug: 'purifying-the-inner-vessel-overcoming-envy-and-pride',
+    excerpt: 'A practical spiritual diagnostic into the invisible diseases of the heart that burn good deeds and how to cultivate genuine sincerity (Ikhlas).',
+    excerptUrdu: 'دل کی پوشیدہ بیماریوں کا روحانی تجزیہ جو نیکیوں کو ضائع کر دیتی ہیں، اور اخلاص حاصل کرنے کا طریقہ۔',
+    category: 'Character',
+    readTime: '8 min read',
+    publishedAt: '2026-10-05',
+    author: 'Learn Islam Daily Editorial',
+    content: `
+### The Vessel of the Soul
+Imam Al-Ghazali (Rahimahullah) likened the human heart to a precious vessel. If a vessel is contaminated with poison or filth, even the purest spring water poured inside turns rancid. In identical fashion, extensive prayer, fasting, and charity lose their spiritual efficacy when corrupted by pride, envy, and showing off.
+
+On the Day of Judgment, no lineage, wealth, or worldly accolades will avail a person: *"Only one who comes to Allah with a sound heart"* (Surah Ash-Shu'ara 26:89).
+
+### 1. Envy (Hasad): The Fire that Consumes Good Deeds
+Envy is the secret resentment at another person receiving a blessing, coupled with a covert wish that the blessing be stripped from them. 
+- **The Core Problem:** Envy is actually an unspoken objection to Allah’s wisdom in distributing His favors.
+- **The Prophetic Antidote:** Whenever you feel a spark of jealousy, immediately make du'a for that person: *"Allahumma barik lahu"* (O Allah, bless them in what You gave them). Praying for your rival extinguishes envy and invites angels to pray for your own provision.
+
+### 2. Pride (Kibr): Rejecting Truth and Belittling People
+The Prophet ﷺ defined pride with absolute precision: **"Pride is disdaining the truth and looking down upon people"** (Sahih Muslim 91).
+- **The Remedy:** Recognize that every talent, IQ point, dollar, and good deed you possess was an unearned gift from Allah. If He willed, He could remove it in a split second.
+
+### 3. Ostentation (Riya): The Hidden Shirk
+Riya is performing righteous acts so that human beings praise your eloquence, knowledge, or piety.
+- **The Remedy:** Cultivate anonymous worship. Maintain prayers and charitable deeds that are completely hidden from social media and known to no human eye.
+    `,
+    keyTakeaways: [
+      'A sound heart (Qalb Saleem) is the only currency that possesses weight on the Day of Resurrection.',
+      'Blessing others when you feel jealous turns Satan’s weapon against him.',
+      'Secret deeds protect your soul from the poison of needing praise from creation.'
+    ],
+    relatedVerses: ['Surah Ash-Shu\'ara 26:88-89', 'Surah Al-Falaq 113:5', 'Surah Luqman 31:18'],
+    published: true,
+    featured: true
+  },
+  {
+    id: 'art-prophetic-mental-wellbeing',
+    title: 'The Prophetic Guide to Mental Well-Being: Navigating Anxiety, Sadness, and Burnout',
+    titleUrdu: 'ذہنی و قلبی سکون کا نبوی طریقہ: اضطراب، غم اور تھکن کا علاج',
+    slug: 'prophetic-guide-to-mental-wellbeing-and-anxiety',
+    excerpt: 'How the teachings of the Qur\'an and the lived reality of the Prophet ﷺ offer holistic solace for emotional exhaustion and psychological overwhelm.',
+    excerptUrdu: 'قرآن مجید اور سیرتِ طیبہ کی روشنی میں ذہنی دباؤ اور غم کے لمحات میں قلبی سکون پانے کی رہنمائی۔',
+    category: 'Faith & Tawakkul',
+    readTime: '9 min read',
+    publishedAt: '2026-10-10',
+    author: 'Learn Islam Daily Editorial',
+    content: `
+### Sacred Sorrow
+A dangerous misconception occasionally circulates in religious spaces: the claim that experiencing sadness, grief, or emotional overwhelm is a sign of weak faith. 
+
+This assertion is completely refuted by Islamic history. The Prophet Muhammad ﷺ wept so deeply at the death of his infant son Ibrahim that tears soaked his beard, and he proclaimed: **"The eyes shed tears and the heart grieves, but we will not say anything except what pleases our Lord"** (Sahih al-Bukhari 1303). The year Khadijah (RA) and Abu Talib passed away is commemorated in Islamic history as *'Am al-Huzn* — The Year of Sorrow.
+
+Grief is a natural human emotion; Islam does not repress our humanity, it sanctifies it.
+
+### The Prophetic Framework for Emotional Resilience
+1. **Verbalizing Pain to Allah Alone:** When Prophet Ya'qub (AS) lost his beloved sons, he did not sink into bitter cynicism. He said: *"I only complain of my suffering and my grief to Allah"* (Surah Yusuf 12:86). Releasing your deepest heartbreak in private prayer (Sujood) provides therapeutic unburdening.
+2. **Accepting Limits & Rejecting "What-Ifs":** The Prophet ﷺ warned against the phrase "If only I had done such-and-such", explaining that *law* (if only) opens the doorway for Satan's whispers. What hit you could never have missed you; what missed you could never have hit you.
+3. **The Grounding Power of Physical Care:** The Prophet ﷺ recommended *Talbinah* (warm barley soup with milk and honey) for the grieving household, stating that it soothes the grieving heart and relieves distress. Islam honors the intimate link between physical wellness and emotional peace.
+4. **Seeking Medical and Psychological Help:** Islam has always championed medicine. The Prophet ﷺ taught: *"Seek treatment, for Allah has not created a disease without creating its cure"* (Sunan Abi Dawud 3855). Consulting licensed therapists or medical professionals is an act of taking the means (Asbab) consistent with Tawakkul.
+    `,
+    keyTakeaways: [
+      'Grief and tears are not signs of weak faith; the Prophet ﷺ wept openly in times of loss.',
+      'Direct your complaints and vulnerability upwards to Allah in quiet prostration.',
+      'Taking medical and therapeutic means is a religious duty that works hand-in-hand with prayer.'
+    ],
+    relatedVerses: ['Surah Yusuf 12:86', 'Surah Ash-Sharh 94:1-8', 'Surah Al-Baqarah 2:155-157'],
+    published: true,
+    featured: true
+  },
+  {
+    id: 'art-voluntary-fasting-spirit',
+    title: 'The Power of Voluntary Fasting: Cultivating Spiritual Clarity and Self-Discipline',
+    titleUrdu: 'نفلی روزوں کی برکت: روحانی بیداری اور نفس پر قابو',
+    slug: 'the-power-of-voluntary-fasting-spiritual-discipline',
+    excerpt: 'Discover the profound spiritual, emotional, and physical gifts of fasting Mondays and Thursdays, the White Days, and the secret shield of Sawm.',
+    excerptUrdu: 'پیر، جمعرات اور ایام بیض کے نفلی روزوں کی فضیلت اور ان کے ذریعے روحانی و جسمانی صفائی۔',
+    category: 'Salah & Worship',
+    readTime: '6 min read',
+    publishedAt: '2026-10-14',
+    author: 'Learn Islam Daily Editorial',
+    content: `
+### Beyond Food and Water
+In a consumer society driven by instant gratification and algorithmic stimulation, human desires (shahawat) are continually fed without pause. Voluntary fasting (Sawm al-Tatawwu') is the ultimate divine brake on the ego.
+
+By willingly turning away from permissible food, drink, and intimate relations for the sake of Allah, the believer asserts spiritual sovereignty over bodily impulses. The stomach is emptied so the heart can be filled with light.
+
+### The Unique Honor of the Fast
+In a sublime Hadith Qudsi, Allah declares:
+> **"Every action of the son of Adam is for him, except fasting; it is for Me, and I shall reward it."**
+> *(Sahih al-Bukhari 1904, Sahih Muslim 1151)*
+
+Why did Allah single out fasting above all other deeds? Because fasting contains no outward spectacle. A person can secretly take a sip of water in a locked room and no human would know. The fast is an absolute secret between the servant and the Master.
+
+### Easy Opportunities for Regular Fasting
+- **Mondays and Thursdays:** Days on which deeds are presented to Allah and the Prophet ﷺ loved to have his deeds presented while fasting.
+- **The White Days (Ayyam al-Beed):** The 13th, 14th, and 15th of every Islamic lunar month, carrying the reward of fasting an entire lifetime.
+- **The Day of Arafah & Day of Ashura:** For expiating the sins of past and coming years.
+    `,
+    keyTakeaways: [
+      'Fasting is a secret worship devoid of showmanship, attracting unique divine reward.',
+      'Controlling permissible desires during daylight builds the inner muscle to resist forbidden desires at night.',
+      'Fasting even a few days a month revitalizes physical health and reconnects the heart with Allah.'
+    ],
+    relatedVerses: ['Surah Al-Baqarah 2:183', 'Surah Al-Ahzab 33:35', 'Surah Maryam 19:26'],
+    published: true
+  },
+  {
+    id: 'art-healing-touch-sadaqah',
+    title: 'The Healing Power of Sincere Charity: Removing Calamity and Reviving the Soul',
+    titleUrdu: 'خلوصِ نیت کے ساتھ صدقہ: مصیبتوں سے نجات اور دل کی شفا',
+    slug: 'the-healing-power-of-sincere-charity-sadaqah',
+    excerpt: 'How voluntary giving acts as an unseen shield against misfortune, soothes illness, and opens locked doors of provision and peace.',
+    excerptUrdu: 'صدقہ کس طرح بلاؤں کو ٹالتا ہے، بیماریوں میں شفا بنتا ہے اور روح کو تازگی بخشتا ہے۔',
+    category: 'Patience',
+    readTime: '7 min read',
+    publishedAt: '2026-10-16',
+    author: 'Learn Islam Daily Editorial',
+    content: `
+### An Unseen Transaction
+When money leaves your bank account for charity, the worldly ledger counts a subtraction. But in the spiritual realm, that exact currency is deposited into the hands of the Most Merciful and multiplied up to seven hundred times or more:
+
+*"The example of those who spend their wealth in the way of Allah is like a seed of grain which grows seven spikes; in each spike is a hundred grains"* (Surah Al-Baqarah 2:261).
+
+### The Metaphysical Effects of Sadaqah
+1. **Extinguishing Calamities:** The Prophet ﷺ taught that **"Charity cools the wrath of the Lord and averts an evil death"** (Jami' at-Tirmidhi 664). Many hidden disasters headed in our direction are quietly averted by a few dollars slipped to a desperate family.
+2. **Curing Illness and Pain:** The Prophet ﷺ advised: **"Treat your sick ones with charity"** (Sahih al-Jami' 3358). When facing a medical crisis, giving charity with the sincere intention of seeking Allah's healing brings unseen relief.
+3. **Softening a Hardened Heart:** A man once came to the Messenger of Allah ﷺ complaining of stiffness in his heart. The Prophet ﷺ instructed him: *"If you want your heart to soften, feed the poor and pat the head of the orphan"* (Musnad Ahmad 7576).
+
+### Everyday Charity Anyone Can Practice
+Sadaqah is never limited to millionaires. Sharing knowledge, forgiving a debt, feeding an animal, removing dangerous objects from public roads, or simply praying for someone in distress are all verified forms of charity that illuminate the path to Jannah.
+    `,
+    keyTakeaways: [
+      'Giving charity multiplies wealth rather than reducing it, as guaranteed by Allah.',
+      'Sadaqah averts calamities, cools Divine wrath, and serves as spiritual medicine for the sick.',
+      'Feeding the hungry and caring for orphans is the most effective cure for spiritual numbness.'
+    ],
+    relatedVerses: ['Surah Al-Baqarah 2:261', 'Surah Saba 34:39', 'Surah Al-Munafiqun 63:10'],
+    published: true,
+    featured: true
   }
 ];
 
@@ -621,3 +801,6 @@ export const VERIFIED_15_ARTICLES: ArticleItem[] = RAW_VERIFIED_15_ARTICLES.map(
   createdAt: a.publishedAt,
   references: a.relatedVerses
 }));
+
+export const VERIFIED_20_ARTICLES = VERIFIED_15_ARTICLES;
+

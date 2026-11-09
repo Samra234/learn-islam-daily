@@ -227,18 +227,25 @@ export const TOPIC_CATEGORIES: TopicCategory[] = [
   }
 ];
 
-import { VERIFIED_30_AYAHS } from './ayahsData';
-import { VERIFIED_30_HADITHS } from './hadithsData';
+import { VERIFIED_30_AYAHS, VERIFIED_45_AYAHS } from './ayahsData';
+import { VERIFIED_30_HADITHS, VERIFIED_45_HADITHS } from './hadithsData';
 import { VERIFIED_30_QUOTES } from './quotesData';
-import { VERIFIED_15_ARTICLES } from './articlesData';
+import { VERIFIED_15_ARTICLES, VERIFIED_20_ARTICLES } from './articlesData';
+import { VERIFIED_30_DUAS } from './duasData';
+import { VERIFIED_25_REMINDERS } from './remindersData';
 
-export { VERIFIED_30_AYAHS } from './ayahsData';
-export { VERIFIED_30_HADITHS } from './hadithsData';
+export { VERIFIED_30_AYAHS, VERIFIED_45_AYAHS } from './ayahsData';
+export { VERIFIED_30_HADITHS, VERIFIED_45_HADITHS } from './hadithsData';
 export { VERIFIED_30_QUOTES } from './quotesData';
-export { VERIFIED_15_ARTICLES } from './articlesData';
+export { VERIFIED_15_ARTICLES, VERIFIED_20_ARTICLES } from './articlesData';
+export { VERIFIED_30_DUAS } from './duasData';
+export { VERIFIED_25_REMINDERS } from './remindersData';
 
-export const INITIAL_AYAHS: AyahItem[] = VERIFIED_30_AYAHS;
-export const INITIAL_HADITHS: HadithItem[] = VERIFIED_30_HADITHS as unknown as HadithItem[];
+export const INITIAL_AYAHS: AyahItem[] = VERIFIED_45_AYAHS;
+export const INITIAL_HADITHS: HadithItem[] = VERIFIED_45_HADITHS as unknown as HadithItem[];
+export const INITIAL_DUAS: DuaItem[] = VERIFIED_30_DUAS;
+export const INITIAL_REMINDERS: ReminderItem[] = VERIFIED_25_REMINDERS;
+export const INITIAL_ARTICLES: ArticleItem[] = VERIFIED_20_ARTICLES as unknown as ArticleItem[];
 
 const OLD_UNUSED_ITEMS: any[] = [
   {
@@ -428,159 +435,8 @@ const OLD_HADITHS: any[] = [
   }
 ];
 
-export const INITIAL_DUAS: DuaItem[] = [
-  {
-    id: 'dua-sayyid-al-istighfar',
-    title: 'Sayyid al-Istighfar (Chief of Forgiveness)',
-    titleUrdu: 'سید الاستغفار',
-    arabic: 'اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ لَكَ بِذَنْبِي فَاغْفِرْ لِي، فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ',
-    transliteration: 'Allahumma Anta Rabbi la ilaha illa Anta, khalaqtani wa ana \'abduka, wa ana \'ala \'ahdika wa wa\'dika mastata\'tu, a\'udhu bika min sharri ma sana\'tu, abu\'u laka bini\'matika \'alayya, wa abu\'u laka bidhanbi faghfir li, fa-innahu la yaghfirudh-dhunuba illa Ant.',
-    english: 'O Allah, You are my Lord, there is no deity worthy of worship except You. You created me and I am Your servant, and I uphold Your covenant and promise as much as I am able. I seek refuge in You from the evil of what I have done. I acknowledge before You Your favors upon me, and I acknowledge my sin, so forgive me, for none forgives sins except You.',
-    urdu: 'اے اللہ! تو ہی میرا رب ہے، تیرے سوا کوئی معبود نہیں، تو نے ہی مجھے پیدا کیا اور میں تیرا بندہ ہوں اور میں اپنی طاقت کے مطابق تیرے عہد اور وعدے پر قائم ہوں۔ میں اپنے کیے کے شر سے تیری پناہ مانگتا ہوں، اپنے اوپر تیری نعمتوں کا اعتراف کرتا ہوں اور اپنے گناہوں کا اعتراف کرتا ہوں، پس مجھے بخش دے کیونکہ تیرے سوا کوئی گناہوں کو بخشنے والا نہیں۔',
-    source: 'Sahih Bukhari 6306',
-    topic: 'Forgiveness & Repentance (Tawbah)',
-    occasion: 'Morning and Evening',
-    published: true,
-    featured: true
-  },
-  {
-    id: 'dua-anxiety-worry',
-    title: 'Dua for Anxiety and Sorrow',
-    titleUrdu: 'فکر و پریشانی دور کرنے کی دعا',
-    arabic: 'اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ، وَالْعَجْزِ وَالْكَسَلِ، وَالْبُخْلِ وَالْجُبْنِ، وَضَلَعِ الدَّيْنِ، وَغَلَبَةِ الرِّجَالِ',
-    transliteration: 'Allahumma inni a\'udhu bika minal-hammi wal-hazan, wal-\'ajzi wal-kasal, wal-bukhli wal-jubn, wa dala\'id-dayni wa ghalabatir-rijal.',
-    english: 'O Allah, I seek refuge in You from anxiety and grief, from incapacity and laziness, from stinginess and cowardice, and from the burden of debt and being overpowered by men.',
-    urdu: 'اے اللہ! میں غم اور پریشانی سے، عاجزی اور سستی سے، بخل اور بزدلی سے، قرض کے بوجھ اور لوگوں کے دباؤ سے تیری پناہ مانگتا ہوں۔',
-    source: 'Sahih Bukhari 2893',
-    topic: 'Anxiety & Relief in Hardship',
-    occasion: 'Times of grief, debt, or overwhelming pressure',
-    published: true,
-    featured: true
-  },
-  {
-    id: 'dua-younus-relief',
-    title: 'Supplication of Prophet Yunus (Dua al-Karbi)',
-    titleUrdu: 'دعائے یونس علیہ السلام (مشکل کشائی)',
-    arabic: 'لَّا إِلَٰهَ إِلَّا أَنتَ سُبْحَانَكَ إِنِّي كُنتُ مِنَ الظَّالِمِينَ',
-    transliteration: 'La ilaha illa Anta subhanaka inni kuntu minaz-zalimin.',
-    english: 'There is no deity except You; exalted are You. Indeed, I have been of the wrongdoers.',
-    urdu: 'تیرے سوا کوئی معبود نہیں، تو پاک ہے، بیشک میں ہی قصورواروں میں سے تھا۔',
-    source: 'Surah Al-Anbiya (21:87) & Jami\' at-Tirmidhi 3505 (Sahih)',
-    topic: 'Anxiety & Relief in Hardship',
-    occasion: 'Whenever distressed or facing seemingly impossible odds',
-    published: true
-  },
-  {
-    id: 'dua-parents-quran',
-    title: 'Quranic Supplication for Parents',
-    titleUrdu: 'والدین کے لیے قرآنی دعا',
-    arabic: 'رَّبِّ ارْحَمْهُمَا كَمَا رَبَّيَانِي صَغِيرًا',
-    transliteration: 'Rabbir-hamhuma kama rabbayani saghira.',
-    english: 'My Lord, have mercy upon them as they brought me up [when I was] small.',
-    urdu: 'اے میرے پروردگار! تو ان دونوں پر رحم فرما جیسا کہ انہوں نے بچپن میں مجھے پالا اور پرورش کی۔',
-    source: 'Surah Al-Isra (17:24)',
-    topic: 'Parents & Family',
-    occasion: 'After every prayer for living and deceased parents',
-    published: true
-  },
-  {
-    id: 'dua-beneficial-knowledge',
-    title: 'Dua for Beneficial Knowledge and Rizq',
-    titleUrdu: 'نفع بخش علم اور پاکیزہ رزق کی دعا',
-    arabic: 'اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا، وَرِزْقًا طَيِّبًا، وَعَمَلًا مُتَقَبَّلًا',
-    transliteration: 'Allahumma inni as\'aluka \'ilman nafi\'a, wa rizqan tayyiba, wa \'amalan mutaqabbala.',
-    english: 'O Allah, I ask You for beneficial knowledge, wholesome provision, and accepted deeds.',
-    urdu: 'اے اللہ! میں تجھ سے نفع بخش علم، پاکیزہ روزی، اور قبول ہونے والے عمل کا سوال کرتا ہوں۔',
-    source: 'Sunan Ibn Majah 925 (Graded Sahih)',
-    topic: 'Rizq & Provision',
-    occasion: 'After Fajr prayer',
-    published: true
-  }
-];
-
 export const INITIAL_QUOTES: QuoteItem[] = VERIFIED_30_QUOTES as unknown as QuoteItem[];
-const OLD_QUOTES: any[] = [
-  {
-    id: 'quote-umar-islam-honor',
-    text: 'We were the most humiliated people on earth, and Allah gave us honor through Islam. If we ever seek honor through anything else, Allah will humiliate us again.',
-    author: 'Umar ibn al-Khattab (RA)',
-    source: 'Al-Mustadrak \'ala al-Sahihayn by Al-Hakim (Authentic)',
-    topic: 'Faith & Tawakkul',
-    published: true,
-    featured: true
-  },
-  {
-    id: 'quote-ali-patience',
-    text: 'Patience is to faith what the head is to the body. When patience is lost, faith is lost; and when the head is severed, the body perishes.',
-    author: 'Ali ibn Abi Talib (RA)',
-    source: 'Hilyat al-Awliya by Abu Nu\'aym',
-    topic: 'Patience (Sabr)',
-    published: true,
-    featured: true
-  },
-  {
-    id: 'quote-hasan-three-days',
-    text: 'The worldly life consists of three days: yesterday has departed along with all that was in it; tomorrow you may never reach; today is yours, so make righteous use of it.',
-    author: 'Al-Hasan al-Basri (Rahimahullah)',
-    source: 'Al-Zuhd by Imam Ahmad ibn Hanbal',
-    topic: 'The Hereafter & Jannah',
-    published: true
-  },
-  {
-    id: 'quote-ibn-qayyim-heart',
-    text: 'If the heart tastes the sweetness of worshipping Allah and the sincerity of turning to Him, nothing else in existence remains more beloved to it or sweeter.',
-    author: 'Ibn al-Qayyim al-Jawziyyah (Rahimahullah)',
-    source: 'Madarij al-Salikin',
-    topic: 'Salah & Dhikr',
-    published: true
-  },
-  {
-    id: 'quote-fudayl-tears',
-    text: 'If you are unable to stand in night prayer and fast during the day, know that you are held back by the chains of your sins.',
-    author: 'Al-Fudayl ibn \'Iyad (Rahimahullah)',
-    source: 'Siyar A\'lam al-Nubala by Al-Dhahabi',
-    topic: 'Forgiveness & Repentance (Tawbah)',
-    published: true
-  }
-];
 
-export const INITIAL_REMINDERS: ReminderItem[] = [
-  {
-    id: 'rem-struggle-unseen',
-    title: 'Allah Knows the Quiet Tears You Hold Back',
-    titleUrdu: 'اللہ آپ کے پوشیدہ آنسوؤں سے بھی باخبر ہے',
-    content: 'When you are trying your hardest in silence and no one around you sees the weight you carry, remember that Al-Basir (The All-Seeing) and As-Sami (The All-Hearing) knows every heartbeat. You never have to explain your exhaustion to Allah — He already knows, and His recompense for silent patience will exceed your imagination.',
-    contentUrdu: 'جب آپ خاموشی سے اپنی پوری کوشش کر رہے ہوں اور کوئی آپ کا بوجھ نہ دیکھ رہا ہو، تو یاد رکھیں کہ البصیر اور السمیع آپ کی ہر کیفیت سے واقف ہے۔ اللہ کے ہاں صبر کا اجر بے شمار ہے۔',
-    relatedAyah: 'And rely upon the Ever-Living who does not die, and exalt [Allah] with His praise.',
-    reference: 'Surah Al-Furqan (25:58)',
-    topic: 'Anxiety & Relief in Hardship',
-    published: true
-  },
-  {
-    id: 'rem-comparison-thief',
-    title: 'Do Not Measure Your Chapters Against Another\'s Highlights',
-    titleUrdu: 'اپنی زندگی کا موازنہ دوسروں سے مت کیجیے',
-    content: 'Allah distributes worldly gifts with infinite wisdom. What was withheld from you was withheld for your protection, and what was delayed was scheduled for the exact moment your soul is ready. Protect your contentment: envy burns good deeds like fire consumes wood.',
-    contentUrdu: 'اللہ تعالیٰ نے ہر ایک کا رزق اور امتحان مختلف بنایا ہے۔ جو چیز آپ سے روکی گئی ہے وہ بھی حکمت کے تحت ہے، لہٰذا دوسروں کے حالات دیکھ کر ناشکری نہ کیجیے۔',
-    relatedAyah: 'And do not extend your eyes toward that by which We have given enjoyment to [some] categories of them...',
-    reference: 'Surah Ta-Ha (20:131)',
-    topic: 'Rizq & Contentment',
-    published: true
-  },
-  {
-    id: 'rem-start-again-tawbah',
-    title: 'Fall Down Seven Times, Return to Allah Eight',
-    titleUrdu: 'ہر بار گرنے کے بعد اللہ کی طرف پلٹ آئیے',
-    content: 'Shaytan whispers that your repentance is hypocritical because you stumbled again. That whisper is the true deception. The real tragedy is not that you slipped, but that you gave up coming back to the Most Merciful. Every sincere tear resets your record.',
-    contentUrdu: 'شیطان آپ کے دل میں وسوسہ ڈالتا ہے کہ بار بار گناہ کے بعد توبہ قبول نہیں ہوگی۔ یاد رکھیے کہ توبہ کا دروازہ آخری سانس تک کھلا ہے۔',
-    relatedAyah: 'Indeed, Allah loves those who are constantly repentant and loves those who purify themselves.',
-    reference: 'Surah Al-Baqarah (2:222)',
-    topic: 'Forgiveness & Repentance (Tawbah)',
-    published: true
-  }
-];
-
-export const INITIAL_ARTICLES: ArticleItem[] = VERIFIED_15_ARTICLES as unknown as ArticleItem[];
 const OLD_ARTICLES: any[] = [
   {
     id: 'art-tawakkul-practical',

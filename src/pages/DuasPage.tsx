@@ -22,17 +22,23 @@ export const DuasPage: React.FC = () => {
   });
 
   const categories = [
-    'all',
-    'Anxiety & Relief in Hardship',
-    'Forgiveness & Repentance (Tawbah)',
-    'Parents & Family',
-    'Rizq & Provision',
-    'Morning and Evening',
-    'Protection'
+    { label: 'All Duas', value: 'all' },
+    { label: 'Morning & Evening', value: 'Morning and Evening' },
+    { label: 'Anxiety & Relief', value: 'Anxiety & Relief in Hardship' },
+    { label: 'Protection & Healing', value: 'Protection' },
+    { label: 'Forgiveness & Tawbah', value: 'Forgiveness & Repentance (Tawbah)' },
+    { label: 'Rizq & Independence', value: 'Rizq & Provision' },
+    { label: 'Parents & Family', value: 'Parents & Family' },
+    { label: 'Faith & Tawakkul', value: 'Faith & Tawakkul' },
+    { label: 'Salah & Worship', value: 'Salah & Worship' },
+    { label: 'Guidance & Wisdom', value: 'Seeking Guidance & Knowledge' }
   ];
 
   const filtered = duas.filter(d => {
-    const matchesCat = selectedTopic === 'all' || d.topic === selectedTopic || d.occasion?.includes(selectedTopic);
+    const matchesCat = selectedTopic === 'all' ||
+      d.topic === selectedTopic ||
+      (d.occasion && d.occasion.toLowerCase().includes(selectedTopic.toLowerCase())) ||
+      (d.topic && d.topic.toLowerCase().includes(selectedTopic.toLowerCase().split(' ')[0]));
     const matchesQuery = !searchQuery ||
       d.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       d.english.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -86,15 +92,15 @@ export const DuasPage: React.FC = () => {
       <div className="flex items-center space-x-2 overflow-x-auto pb-2 scrollbar-none justify-start sm:justify-center">
         {categories.map(cat => (
           <button
-            key={cat}
-            onClick={() => setSelectedTopic(cat)}
+            key={cat.value}
+            onClick={() => setSelectedTopic(cat.value)}
             className={`px-3.5 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition ${
-              selectedTopic === cat
+              selectedTopic === cat.value
                 ? 'bg-teal-800 text-white shadow-xs'
                 : 'bg-white text-stone-600 border border-stone-200 hover:bg-stone-50'
             }`}
           >
-            {cat === 'all' ? 'All Duas' : cat}
+            {cat.label}
           </button>
         ))}
       </div>

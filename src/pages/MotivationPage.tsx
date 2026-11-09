@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sparkles, Share2, Bookmark, Copy, Check, Heart, ShieldAlert } from 'lucide-react';
+import { Sparkles, Share2, Bookmark, Copy, Check, Heart, ShieldAlert, Search } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { ReminderItem } from '../data/islamicData';
 import { ShareCardModal } from '../components/ShareCardModal';
@@ -7,6 +7,8 @@ import { ShareCardModal } from '../components/ShareCardModal';
 export const MotivationPage: React.FC = () => {
   const { reminders, isBookmarked, toggleBookmark, language } = useApp();
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedTopic, setSelectedTopic] = useState('all');
 
   const [shareModal, setShareModal] = useState<{
     isOpen: boolean;
@@ -18,6 +20,28 @@ export const MotivationPage: React.FC = () => {
     title: '',
     translation: '',
     reference: ''
+  });
+
+  const categories = [
+    'all',
+    'Anxiety & Relief in Hardship',
+    'Trust in Allah (Tawakkul)',
+    'Rizq & Contentment',
+    'Salah & Dhikr',
+    'Forgiveness & Repentance (Tawbah)',
+    'Good Character (Husn al-Khuluq)',
+    'Patience (Sabr)'
+  ];
+
+  const filtered = reminders.filter(r => {
+    const matchesCat = selectedTopic === 'all' || r.topic.toLowerCase().includes(selectedTopic.toLowerCase().split(' ')[0]);
+    const matchesQuery = !searchQuery ||
+      r.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      r.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      r.relatedAyah.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (r.titleUrdu && r.titleUrdu.includes(searchQuery)) ||
+      (r.contentUrdu && r.contentUrdu.includes(searchQuery));
+    return matchesCat && matchesQuery;
   });
 
   const handleCopy = async (item: ReminderItem) => {
@@ -45,6 +69,20 @@ export const MotivationPage: React.FC = () => {
           Gentle words for exhausted souls facing trials, self-doubt, or delayed prayers. Grounded in Islamic principles and paired with comforting Qur'anic verses.
         </p>
 
+        {/* Search */}
+        <div className="pt-2 flex justify-center">
+          <div className="relative w-full max-w-md">
+            <Search className="w-4 h-4 text-stone-400 absolute left-3.5 top-3.5" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search reminders by title, situation, or keyword..."
+              className="w-full pl-10 pr-4 py-2.5 bg-white border border-stone-300 rounded-xl text-xs sm:text-sm focus:outline-hidden focus:border-amber-600 shadow-xs"
+            />
+          </div>
+        </div>
+
         {/* Distinct Separation Notice */}
         <div className="p-3 bg-stone-100 rounded-xl text-xs text-stone-600 flex items-center justify-center space-x-2 max-w-xl mx-auto">
           <ShieldAlert className="w-4 h-4 text-amber-600 shrink-0" />
@@ -54,9 +92,26 @@ export const MotivationPage: React.FC = () => {
         </div>
       </div>
 
+      {/* Category Filter Pills */}
+      <div className="flex items-center space-x-2 overflow-x-auto pb-2 scrollbar-none justify-start sm:justify-center">
+        {categories.map(cat => (
+          <button
+            key={cat}
+            onClick={() => setSelectedTopic(cat)}
+            className={`px-3.5 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition ${
+              selectedTopic === cat
+                ? 'bg-amber-800 text-white shadow-xs'
+                : 'bg-white text-stone-600 border border-stone-200 hover:bg-stone-50'
+            }`}
+          >
+            {cat === 'all' ? 'All Reminders' : cat.split('(')[0].trim()}
+          </button>
+        ))}
+      </div>
+
       {/* Reminders List */}
       <div className="space-y-6">
-        {reminders.map(item => (
+        {filtered.map(item => (
           <div
             key={item.id}
             className="bg-white rounded-3xl p-6 sm:p-8 border border-stone-200 shadow-sm space-y-6"
@@ -145,7 +200,7 @@ export const MotivationPage: React.FC = () => {
 
       <ShareCardModal
         isOpen={shareModal.isOpen}
-        onClose={() => setShareModal(prev => ({ ...prev, isOpen: false }))}
+        onClose={() => setShareModal({ ...shareModal, isOpen: false })}
         title={shareModal.title}
         translation={shareModal.translation}
         reference={shareModal.reference}
